@@ -8,7 +8,7 @@ namespace ChatClient.Net
         public PacketReader PacketReader;
         public event Action ConnectedEvent;
         public event Action MsgReceivedEvent;
-        public event Action UserDisconnected;
+        public event Action UserDisconnectedEvent;
 
         private TcpClient client;
 
@@ -49,11 +49,11 @@ namespace ChatClient.Net
                             break;
 
                         case 5:
-                            ConnectedEvent?.Invoke();
+                            MsgReceivedEvent?.Invoke();
                             break;
 
                         case 10:
-                            ConnectedEvent?.Invoke();
+                            UserDisconnectedEvent?.Invoke();
                             break;
                         default:
                             throw new Exception();
