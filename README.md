@@ -1,4 +1,5 @@
 # ChatApp
+A simple chatting app prototype based on [This Video](https://www.youtube.com/watch?v=I-Xmp-mulz4)
 
 ## 📸 Screenshots
 <p align="center">
