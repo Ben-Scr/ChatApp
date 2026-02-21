@@ -19,6 +19,37 @@
         <viewmodel:MainViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <Style x:Key="NoSelectionListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MessageBubbleStyle" TargetType="Border">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Background" Value="#161B22"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border.Default}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsOwnMessage}" Value="True">
+                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                    <Setter Property="Background" Value="#1F6FEB"/>
+                    <Setter Property="BorderBrush" Value="#1F6FEB"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="42"
                             CornerRadius="12"
@@ -49,9 +80,48 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="12" Height="12" CornerRadius="6" Background="#F85149" Margin="0,0,8,0"/>
-                        <Border Width="12" Height="12" CornerRadius="6" Background="#D29922" Margin="0,0,8,0"/>
-                        <Border Width="12" Height="12" CornerRadius="6" Background="#3FB950" Margin="0,0,16,0"/>
+                        <Button Width="12"
+                                Height="12"
+                                Margin="0,0,8,0"
+                                Background="#F85149"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                ToolTip="Close"
+                                Click="CloseButton_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border CornerRadius="6" Background="{TemplateBinding Background}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Width="12"
+                                Height="12"
+                                Margin="0,0,8,0"
+                                Background="#D29922"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                ToolTip="Minimize"
+                                Click="MinimizeButton_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border CornerRadius="6" Background="{TemplateBinding Background}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Width="12"
+                                Height="12"
+                                Margin="0,0,16,0"
+                                Background="#3FB950"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                ToolTip="Maximize / Restore"
+                                Click="MaximizeRestoreButton_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border CornerRadius="6" Background="{TemplateBinding Background}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
                         <TextBlock Text="ChatApp"
                                    Foreground="{StaticResource Foreground.Emphasis}"
                                    FontWeight="SemiBold"
@@ -134,10 +204,11 @@
                                 <ListView ItemsSource="{Binding Users}"
                                           Background="Transparent"
                                           BorderThickness="0"
-                                          Foreground="{StaticResource Foreground.Primary}">
+                                          Foreground="{StaticResource Foreground.Primary}"
+                                          ItemContainerStyle="{StaticResource NoSelectionListViewItemStyle}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Margin="0,0,0,0"
+                                            <Border Margin="0,0,0,6"
                                                     Padding="8,6"
                                                     CornerRadius="6"
                                                     Background="#161B22"
@@ -185,16 +256,16 @@
                             <ListView ItemsSource="{Binding Messages}"
                                       Background="Transparent"
                                       BorderThickness="0"
-                                      Foreground="{StaticResource Foreground.Primary}">
+                                      Foreground="{StaticResource Foreground.Primary}"
+                                      ItemContainerStyle="{StaticResource NoSelectionListViewItemStyle}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Border Margin="0,0,0,8"
                                                 Padding="10,8"
                                                 CornerRadius="8"
-                                                Background="#161B22"
-                                                BorderBrush="{StaticResource Border.Default}"
-                                                BorderThickness="1">
-                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" FontSize="13"/>
+                                                MaxWidth="520"
+                                                Style="{StaticResource MessageBubbleStyle}">
+                                            <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="13"/>
                                         </Border>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
