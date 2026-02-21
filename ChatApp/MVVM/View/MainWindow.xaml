@@ -9,7 +9,7 @@
         Title="ChatApp"
         Height="560"
         Width="980"
-        ResizeMode="CanMinimize"
+        ResizeMode="CanResize"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
@@ -79,7 +79,9 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button Width="12"
                                 Height="12"
                                 Margin="0,0,8,0"
