@@ -4,75 +4,242 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
-        xmlns:local="clr-namespace:ChatApp"
-        xmlns:viewmodel = "clr-namespace:ChatClient.MVVM.ViewModel"
+        xmlns:viewmodel="clr-namespace:ChatClient.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="474" Width="816"
-        ResizeMode="NoResize"
+        Title="ChatApp"
+        Height="560"
+        Width="980"
+        ResizeMode="CanMinimize"
         WindowStyle="None"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        FontFamily="Segoe UI">
 
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
 
     <shell:WindowChrome.WindowChrome>
-        <shell:WindowChrome CaptionHeight="44"
-                         CornerRadius="10"
-                         UseAeroCaptionButtons="False"
-                         ResizeBorderThickness="5"/>
+        <shell:WindowChrome CaptionHeight="42"
+                            CornerRadius="12"
+                            UseAeroCaptionButtons="False"
+                            ResizeBorderThickness="6"/>
     </shell:WindowChrome.WindowChrome>
 
-    <Border CornerRadius="10"
-         Background="{StaticResource Background.Default}"
-         BorderBrush="{StaticResource Border.Default}"
-         BorderThickness="1"
-         SnapsToDevicePixels="True">
+    <Border CornerRadius="12"
+            Background="{StaticResource Background.Default}"
+            BorderBrush="{StaticResource Border.Default}"
+            BorderThickness="1">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="56"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <DockPanel>
-                <TextBox Height="25"
-                     DockPanel.Dock="Top"
-                         BorderBrush="{StaticResource Border.Default}"
-                         BorderThickness="1"
-                         Background="{StaticResource Background.Default}"
-                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Height="25"
-                    DockPanel.Dock="Top"
-                    Content="Connect"
-                    Command="{Binding ConnectToServerCommand}"/>
-                <ListView ItemsSource="{Binding Users}" Background="{StaticResource Background.Default}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding UserName}"></TextBlock>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </DockPanel>
+            <Border Grid.Row="0"
+                    CornerRadius="12,12,0,0"
+                    BorderBrush="{StaticResource Border.Default}"
+                    BorderThickness="0,0,0,1"
+                    Background="#161B22">
+                <Grid Margin="16,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="1">
-                <ListView Height="380"
-                      ItemsSource="{Binding Messages}"
-                          Background="{StaticResource Background.Default}"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="12" Height="12" CornerRadius="6" Background="#F85149" Margin="0,0,8,0"/>
+                        <Border Width="12" Height="12" CornerRadius="6" Background="#D29922" Margin="0,0,8,0"/>
+                        <Border Width="12" Height="12" CornerRadius="6" Background="#3FB950" Margin="0,0,16,0"/>
+                        <TextBlock Text="ChatApp"
+                                   Foreground="{StaticResource Foreground.Emphasis}"
+                                   FontWeight="SemiBold"
+                                   FontSize="15"/>
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Height="55"
-                         Background="{StaticResource Background.Default}"
-                         Width="545"
-                         VerticalContentAlignment="Center"
-                         Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
+                
 
-                    <Button Width="55"
-                        Content="Send"
-                        Command="{Binding SendMessageCommand}"/>
-                </StackPanel>
-            </StackPanel>
+                    <Border Grid.Column="2"
+                            Background="#0D1117"
+                            BorderBrush="{StaticResource Border.Default}"
+                            BorderThickness="1"
+                            CornerRadius="15"
+                            Padding="10,5"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="● Online"
+                                   Foreground="#3FB950"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Background="#161B22"
+                        BorderBrush="{StaticResource Border.Default}"
+                        BorderThickness="0,0,1,0"
+                        Padding="14">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Profile"
+                                   Foreground="{StaticResource Foreground.Secondary}"
+                                   FontSize="12"
+                                   Margin="2,0,0,6"/>
+
+                        <TextBox Grid.Row="1"
+                                 Margin="0,0,0,10"
+                                 Padding="10,8"
+                                 Height="36"
+                                 Background="#0D1117"
+                                 BorderBrush="{StaticResource Border.Default}"
+                                 BorderThickness="1"
+                                 Foreground="{StaticResource Foreground.Primary}"
+                                 Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button Grid.Row="2"
+                                Height="36"
+                                Margin="0,0,0,14"
+                                Content="Connect"
+                                Command="{Binding ConnectToServerCommand}"
+                                Background="{StaticResource PrimaryButton.Default}"
+                                BorderBrush="#2EA043"
+                                Foreground="White"
+                                FontWeight="SemiBold"/>
+
+                        <Border Grid.Row="3"
+                                Background="#0D1117"
+                                BorderBrush="{StaticResource Border.Default}"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="8">
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Top"
+                                           Text="Members"
+                                           Foreground="{StaticResource Foreground.Secondary}"
+                                           Margin="4,0,0,8"
+                                           FontSize="12"/>
+                                <ListView ItemsSource="{Binding Users}"
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          Foreground="{StaticResource Foreground.Primary}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="0,0,0,0"
+                                                    Padding="8,6"
+                                                    CornerRadius="6"
+                                                    Background="#161B22"
+                                                    BorderBrush="{StaticResource Border.Default}"
+                                                    BorderThickness="1">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Ellipse Width="8" Height="8" Fill="#3FB950" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding UserName}" FontSize="13"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Column="1" Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                            Background="#0D1117"
+                            BorderBrush="{StaticResource Border.Default}"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Padding="10">
+                        <DockPanel>
+                            <Border DockPanel.Dock="Top"
+                                    Background="#161B22"
+                                    BorderBrush="{StaticResource Border.Default}"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Padding="10,8"
+                                    Margin="0,0,0,10">
+                                <TextBlock Text="# general"
+                                           Foreground="{StaticResource Foreground.Emphasis}"
+                                           FontWeight="SemiBold"
+                                           FontSize="14"/>
+                            </Border>
+
+                            <ListView ItemsSource="{Binding Messages}"
+                                      Background="Transparent"
+                                      BorderThickness="0"
+                                      Foreground="{StaticResource Foreground.Primary}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="0,0,0,8"
+                                                Padding="10,8"
+                                                CornerRadius="8"
+                                                Background="#161B22"
+                                                BorderBrush="{StaticResource Border.Default}"
+                                                BorderThickness="1">
+                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" FontSize="13"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </DockPanel>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                            Margin="0,14,0,0"
+                            Background="#0D1117"
+                            BorderBrush="{StaticResource Border.Default}"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Grid.Column="0"
+                                     Height="40"
+                                     Margin="0"
+                                     Padding="10,8"
+                                     Background="#161B22"
+                                     BorderBrush="{StaticResource Border.Default}"
+                                     BorderThickness="1"
+                                     Foreground="{StaticResource Foreground.Primary}"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <Button Grid.Column="1"
+                                    Width="110"
+                                    Height="40"
+                                    Margin="10,0,0,0"
+                                    Content="Send"
+                                    Command="{Binding SendMessageCommand}"
+                                    Background="#2F81F7"
+                                    BorderBrush="#1F6FEB"
+                                    Foreground="White"
+                                    FontWeight="SemiBold"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
         </Grid>
-
     </Border>
 </Window>
